@@ -42,6 +42,8 @@ import scala.annotation.implicitNotFound
 
   def writeStrings(name: String): Option[Seq[String]] => IF
 
+  def writeIntArray(name: String): Option[Array[Int]] => IF
+
   def writer: Seq[IF] => T
 }
 

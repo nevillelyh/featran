@@ -33,6 +33,7 @@ object FeatureRejection {
   case class Unseen(labels: Set[String]) extends FeatureRejection
   case class WrongDimension(expected: Int, actual: Int) extends FeatureRejection
   case class Outlier(actual: Double) extends FeatureRejection
+  case class InvalidInput(reason: String) extends FeatureRejection
   case object Collision extends FeatureRejection
 }
 
@@ -101,6 +102,16 @@ object FeatureRejection {
    */
   def add[M[_]](names: Iterable[String], values: M[Double])(implicit
     ev: M[Double] => Seq[Double]
+  ): Unit = {
+    val i = names.iterator
+    val j = values.iterator
+    while (i.hasNext && j.hasNext) {
+      add(i.next(), j.next())
+    }
+  }
+
+  def addInts[M[_]](names: Iterable[String], values: M[Int])(implicit
+                                                            ev: M[Int] => Seq[Int]
   ): Unit = {
     val i = names.iterator
     val j = values.iterator

@@ -23,7 +23,7 @@ import scala.annotation.implicitNotFound
 
 /** Type class for floating point primitives. */
 @implicitNotFound("Could not find an instance of FloatingPoint for ${T}")
-@typeclass trait FloatingPoint[@specialized(Float, Double) T] extends Serializable {
+@typeclass trait FloatingPoint[@specialized(Float, Double, Int) T] extends Serializable {
   def fromDouble(x: Double): T
 }
 
@@ -33,6 +33,9 @@ object FloatingPoint {
   }
   implicit val doubleFP: FloatingPoint[Double] = new FloatingPoint[Double] {
     override def fromDouble(x: Double): Double = x
+  }
+  implicit val intFP: FloatingPoint[Int] = new FloatingPoint[Int] {
+    override def fromDouble(x: Double): Int = x.toInt
   }
 
   /* ======================================================================== */

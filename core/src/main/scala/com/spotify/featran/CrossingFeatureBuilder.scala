@@ -117,6 +117,20 @@ private class CrossingFeatureBuilder[F] private (
     }
     fb.add(names, values)
   }
+
+  override def addInts[M[_]](names: Iterable[String], values: M[Int])(implicit
+                                                                      ev: M[Int] => Seq[Int]): Unit = {
+    if (xEnabled) {
+      val i = names.iterator
+      val j = values.iterator
+      while (i.hasNext && j.hasNext) {
+        xQueue.enqueue(CrossValue(i.next(), xOffset, j.next()))
+        xOffset += 1
+      }
+    }
+    fb.addInts(names, values)
+  }
+
   override def skip(): Unit = {
     xOffset += 1
     fb.skip()

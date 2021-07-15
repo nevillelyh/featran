@@ -45,7 +45,7 @@ object Normalizer extends SettingsBuilder {
     new Normalizer(name, p, expectedLength)
 
   /**
-   * Create a new [[OneHotEncoder]] from a settings object
+   * Create a new [[Normalizer]] from a settings object
    * @param setting Settings object
    */
   def fromSettings(setting: Settings): Transformer[Array[Double], Int, Int] = {

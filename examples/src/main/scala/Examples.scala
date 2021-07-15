@@ -179,6 +179,17 @@ object Examples {
     // Extract from a single record
     recordExtractor.featureResult(recordGen.sample.get)
 
+    // This example applies the SegmentIndices transformer, which requires an increasing array of integers.
+    val segmentIndicesSpec = FeatureSpec
+      .of[Array[Int]]
+      .required(identity)(SegmentIndices("segmented"))
+
+    val f3: FeatureExtractor[List, Array[Int]] = segmentIndicesSpec.extract(List(Array(0,0,1,1,2,2)))
+
+    // Extract feature names and values as `Array[Int]` similar to other examples
+    println(f3.featureNames.head)
+    f3.featureValues[Array[Int]].foreach(println)
+
     // # Extraction with Scio
 
     // Create input `SCollection[Record]`

@@ -43,6 +43,8 @@ import scala.annotation.implicitNotFound
   def readString(name: String): T => Option[String]
 
   def readStrings(name: String): T => Option[Seq[String]]
+
+  def readIntArray(name: String): T => Option[Array[Int]]
 }
 
 object FlatReader {

@@ -110,6 +110,9 @@ private[featran] trait Implicits extends Serializable {
 
     override def readStrings(name: String): String => Option[Seq[String]] =
       toFeature[Seq[String]](name)
+
+    override def readIntArray(name: String): String => Option[Array[Int]] =
+      toFeature[Array[Int]](name)
   }
 
   implicit val jsonFlatWriter: FlatWriter[String] = new FlatWriter[String] {
@@ -137,6 +140,9 @@ private[featran] trait Implicits extends Serializable {
 
     override def writeStrings(name: String): Option[Seq[String]] => (String, Option[Json]) =
       (v: Option[Seq[String]]) => (name, v.map(_.asJson))
+
+    override def writeIntArray(name: String): Option[Array[Int]] => (String, Option[Json]) =
+      (v: Option[Array[Int]]) => (name, v.map(_.asJson))
 
     override def writer: Seq[(String, Option[Json])] => String =
       _.asJson.noSpaces
